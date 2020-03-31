@@ -1,0 +1,46 @@
+<mat-card class="head-card">
+    <mat-card-header>
+        <div mat-card-avatar>
+            <mat-icon class="toc-icon" (click)="drawer.toggle()">toc</mat-icon>
+        </div>
+        <mat-card-title>
+            Techology News
+        </mat-card-title>
+    </mat-card-header>
+</mat-card>
+<mat-drawer-container class="news-container" [hasBackdrop]="false" autosize>
+    <mat-drawer #drawer mode="side" class="drawer">
+        <mat-list class="list-nav">
+            <ng-container *ngFor="let source of mSources">
+                <mat-list-item class="list-item"
+                    (click)="searchArticles(source.id)">
+                    <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/images/'+ source.id +'.png)'}"
+                        class="header-image"></div>
+                    <span class="source-name"> {{source.name}}</span>
+                </mat-list-item>
+            </ng-container>
+        </mat-list>
+    </mat-drawer>
+    <mat-drawer-content class="drawer-content">
+        <mat-card class="news-card" *ngFor="let article of mArticles">
+            <mat-card-header>
+                <div mat-card-avatar
+                    [ngStyle]="{'background-image': 'url(../assets/images/'+ article.source.id +'.png)'}"
+                    class="header-image"></div>
+                <mat-card-title class="card-title">{{article.title}}</mat-card-title>
+                <mat-card-subtitle>{{article.source.name}}</mat-card-subtitle>
+            </mat-card-header>
+            <img class="image-card" src={{article.urlToImage}} alt=""/>           
+            <mat-card-content class="card-content">
+                <p>
+                    {{article.description}}
+                </p>
+            </mat-card-content>
+            <mat-card-actions class="action-buttons">
+                <a mat-button href={{article.url}} target="_blank">
+                    <mat-icon>more_horiz</mat-icon>
+                </a>
+            </mat-card-actions>
+        </mat-card>
+    </mat-drawer-content>
+</mat-drawer-container>
